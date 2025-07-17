@@ -1,0 +1,158 @@
+name: 📊 Monitoring & Alerts
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Ogni 6 ore
+  workflow_dispatch:
+
+jobs:
+  # ================================
+  # 1. DEPENDENCY MONITORING
+  # ================================
+  dependency-monitor:
+    name: 📦 Dependency Monitor
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 🔍 Check Outdated Dependencies
+        run: |
+          for app in ai-hrms nose web-hunter; do
+            echo "📦 Checking $app dependencies..."
+            cd apps/$app/backend
+            npm outdated || true
+            cd ../frontend
+            npm outdated || true
+            cd ../../..
+          done
+      
+      - name: 🚨 Security Audit
+        run: |
+          AUDIT_RESULTS=""
+          for app in ai-hrms nose web-hunter; do
+            cd apps/$app/backend
+            AUDIT_OUTPUT=$(npm audit --audit-level=moderate --json || true)
+            if [ "$AUDIT_OUTPUT" != "{}" ]; then
+              AUDIT_RESULTS="$AUDIT_RESULTS\n$app backend: $AUDIT_OUTPUT"
+            fi
+            cd ../frontend
+            AUDIT_OUTPUT=$(npm audit --audit-level=moderate --json || true)
+            if [ "$AUDIT_OUTPUT" != "{}" ]; then
+              AUDIT_RESULTS="$AUDIT_RESULTS\n$app frontend: $AUDIT_OUTPUT"
+            fi
+            cd ../../..
+          done
+          
+          if [ -n "$AUDIT_RESULTS" ]; then
+            echo "🚨 Security vulnerabilities found!"
+            echo -e "$AUDIT_RESULTS"
+            # Qui puoi inviare notifiche
+          fi
+
+  # ================================
+  # 2. PERFORMANCE MONITORING
+  # ================================
+  performance-monitor:
+    name: ⚡ Performance Monitor
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 📊 Bundle Size Analysis
+        run: |
+          for app in ai-hrms nose web-hunter; do
+            echo "📊 Analyzing $app bundle size..."
+            cd apps/$app/frontend
+            npm ci
+            npm run build
+            
+            # Analisi dimensioni bundle
+            BUNDLE_SIZE=$(du -sh build/ | cut -f1)
+            echo "$app bundle size: $BUNDLE_SIZE"
+            
+            # Controlla se supera i limiti
+            BUNDLE_SIZE_BYTES=$(du -sb build/ | cut -f1)
+            if [ "$BUNDLE_SIZE_BYTES" -gt 5242880 ]; then  # 5MB
+              echo "⚠️ Warning: $app bundle size exceeds 5MB!"
+            fi
+            
+            cd ../../..
+          done
+
+  # ================================
+  # 3. INFRASTRUCTURE MONITORING
+  # ================================
+  infrastructure-monitor:
+    name: 🏗️ Infrastructure Monitor
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🐳 Docker Image Analysis
+        run: |
+          echo "🐳 Analyzing Docker configurations..."
+          
+          # Controlla Dockerfile per best practices
+          for app in ai-hrms nose web-hunter; do
+            for component in backend frontend; do
+              dockerfile="apps/$app/$component/Dockerfile"
+              if [ -f "$dockerfile" ]; then
+                echo "🔍 Checking $dockerfile..."
+                
+                # Verifica FROM statement
+                if grep -q "FROM node:latest" "$dockerfile"; then
+                  echo "⚠️ Warning: Using 'latest' tag in $dockerfile"
+                fi
+                
+                # Verifica USER statement
+                if ! grep -q "USER " "$dockerfile"; then
+                  echo "⚠️ Warning: No USER statement in $dockerfile"
+                fi
+              fi
+            done
+          done
+      
+      - name: 📊 Resource Usage Estimation
+        run: |
+          echo "📊 Estimating resource usage..."
+          
+          # Calcola risorse stimate
+          TOTAL_MEMORY="0"
+          TOTAL_CPU="0"
+          
+          for app in ai-hrms nose web-hunter; do
+            # Stima memoria per backend (512MB) e frontend (256MB)
+            MEMORY_MB=$((512 + 256))
+            CPU_CORES="1"
+            
+            echo "$app estimated resources: ${MEMORY_MB}MB RAM, ${CPU_CORES} CPU cores"
+            TOTAL_MEMORY=$((TOTAL_MEMORY + MEMORY_MB))
+            TOTAL_CPU=$((TOTAL_CPU + CPU_CORES))
+          done
+          
+          echo "Total estimated resources: ${TOTAL_MEMORY}MB RAM, ${TOTAL_CPU} CPU cores"
+          
+          # Aggiungi risorse per servizi (MongoDB, Redis, Prometheus, Grafana)
+          SERVICES_MEMORY=$((1024 + 512 + 512 + 512))  # 2.5GB
+          SERVICES_CPU="2"
+          
+          TOTAL_MEMORY=$((TOTAL_MEMORY + SERVICES_MEMORY))
+          TOTAL_CPU=$((TOTAL_CPU + SERVICES_CPU))
+          
+          echo "Total with services: ${TOTAL_MEMORY}MB RAM, ${TOTAL_CPU} CPU cores"

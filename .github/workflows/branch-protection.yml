@@ -1,0 +1,78 @@
+name: 🛡️ Branch Protection
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ================================
+  # 1. CONVENTIONAL COMMITS CHECK
+  # ================================
+  commit-check:
+    name: 📝 Commit Convention Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 📝 Check Commit Messages
+        uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: '.commitlintrc.yml'
+
+  # ================================
+  # 2. DEPENDENCY CHECK
+  # ================================
+  dependency-check:
+    name: 🔍 Dependency Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 🔍 Check for Vulnerabilities
+        run: |
+          for app in ai-hrms nose web-hunter; do
+            echo "🔍 Checking $app dependencies..."
+            cd apps/$app/backend
+            npm audit --audit-level=high
+            cd ../frontend
+            npm audit --audit-level=high
+            cd ../../..
+          done
+
+  # ================================
+  # 3. PERFORMANCE CHECK
+  # ================================
+  performance-check:
+    name: ⚡ Performance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: ⚡ Bundle Size Check
+        run: |
+          for app in ai-hrms nose web-hunter; do
+            echo "📊 Checking $app bundle size..."
+            cd apps/$app/frontend
+            npm ci
+            npm run build
+            # Aggiungi controllo dimensione bundle
+            cd ../../..
+          done

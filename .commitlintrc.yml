@@ -1,0 +1,56 @@
+extends:
+  - '@commitlint/config-conventional'
+
+rules:
+  type-enum:
+    - 2
+    - always
+    - [
+        'feat',     # New feature
+        'fix',      # Bug fix
+        'docs',     # Documentation
+        'style',    # Code style
+        'refactor', # Code refactoring
+        'perf',     # Performance improvement
+        'test',     # Tests
+        'chore',    # Maintenance
+        'ci',       # CI/CD
+        'build',    # Build system
+        'revert'    # Revert changes
+      ]
+  
+  scope-enum:
+    - 2
+    - always
+    - [
+        'ai-hrms',
+        'nose',
+        'web-hunter',
+        'docker',
+        'ci',
+        'docs',
+        'config',
+        'security',
+        'monitoring',
+        'database',
+        'api'
+      ]
+  
+  subject-case:
+    - 2
+    - never
+    - ['sentence-case', 'start-case', 'pascal-case', 'upper-case']
+  
+  subject-empty:
+    - 2
+    - never
+  
+  subject-full-stop:
+    - 2
+    - never
+    - '.'
+  
+  header-max-length:
+    - 2
+    - always
+    - 72

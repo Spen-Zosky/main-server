@@ -1,0 +1,186 @@
+name: 📦 Versioning & Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version increment type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  # ================================
+  # 1. CALCULATE VERSION
+  # ================================
+  version:
+    name: 📊 Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 📦 Install semantic-release
+        run: |
+          npm install -g semantic-release @semantic-release/changelog @semantic-release/git
+      
+      - name: 📊 Calculate Next Version
+        id: version
+        run: |
+          # Usa semantic-release per calcolare la prossima versione
+          NEXT_VERSION=$(npx semantic-release --dry-run | grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          if [ -z "$NEXT_VERSION" ]; then
+            CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+            case "${{ github.event.inputs.version_type }}" in
+              major) NEXT_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1+1".0.0"}') ;;
+              minor) NEXT_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2+1".0"}') ;;
+              patch) NEXT_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."$3+1}') ;;
+              *) NEXT_VERSION=$(echo $CURRENT_VERSION | awk -F. '{print $1"."$2"."$3+1}') ;;
+            esac
+          fi
+          echo "version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+          echo "📊 Next version: $NEXT_VERSION"
+      
+      - name: 📝 Generate Changelog
+        id: changelog
+        run: |
+          # Genera changelog automatico
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            CHANGELOG=$(git log --pretty=format:"- %s" --no-merges)
+          else
+            CHANGELOG=$(git log $LAST_TAG..HEAD --pretty=format:"- %s" --no-merges)
+          fi
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+  # ================================
+  # 2. CREATE RELEASE
+  # ================================
+  release:
+    name: 🏷️ Create Release
+    runs-on: ubuntu-latest
+    needs: version
+    if: needs.version.outputs.version != ''
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🏷️ Create Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${{ needs.version.outputs.version }}" -m "Release v${{ needs.version.outputs.version }}"
+          git push origin "v${{ needs.version.outputs.version }}"
+      
+      - name: 📦 Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ needs.version.outputs.version }}
+          release_name: Release v${{ needs.version.outputs.version }}
+          body: |
+            ## 🚀 Release v${{ needs.version.outputs.version }}
+            
+            ### 📋 Changes:
+            ${{ needs.version.outputs.changelog }}
+            
+            ### 🐳 Docker Images:
+            - `ghcr.io/${{ github.repository }}/ai-hrms-backend:${{ needs.version.outputs.version }}`
+            - `ghcr.io/${{ github.repository }}/ai-hrms-frontend:${{ needs.version.outputs.version }}`
+            - `ghcr.io/${{ github.repository }}/nose-backend:${{ needs.version.outputs.version }}`
+            - `ghcr.io/${{ github.repository }}/nose-frontend:${{ needs.version.outputs.version }}`
+            - `ghcr.io/${{ github.repository }}/web-hunter-backend:${{ needs.version.outputs.version }}`
+            - `ghcr.io/${{ github.repository }}/web-hunter-frontend:${{ needs.version.outputs.version }}`
+            
+            ### 🔧 Installation:
+            ```bash
+            git clone https://github.com/${{ github.repository }}.git
+            cd main-server
+            git checkout v${{ needs.version.outputs.version }}
+            ./configure_env.sh
+            docker-compose -f docker-compose.prod.yml up -d
+            ```
+          draft: false
+          prerelease: false
+      
+      - name: 📝 Update Version Files
+        run: |
+          # Aggiorna package.json files
+          for app in ai-hrms nose web-hunter; do
+            cd apps/$app/backend
+            npm version ${{ needs.version.outputs.version }} --no-git-tag-version
+            cd ../frontend
+            npm version ${{ needs.version.outputs.version }} --no-git-tag-version
+            cd ../../..
+          done
+          
+          # Aggiorna VERSION file
+          echo "${{ needs.version.outputs.version }}" > VERSION
+          
+          # Commit changes
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: bump version to ${{ needs.version.outputs.version }}"
+          git push origin main
+
+  # ================================
+  # 3. UPDATE DOCUMENTATION
+  # ================================
+  docs:
+    name: 📚 Update Documentation
+    runs-on: ubuntu-latest
+    needs: [version, release]
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 📚 Update README
+        run: |
+          # Aggiorna README con nuova versione
+          sed -i "s/Version: [0-9]*\.[0-9]*\.[0-9]*/Version: ${{ needs.version.outputs.version }}/g" README.md
+          sed -i "s/\*\*Last Updated\*\*: .*/\*\*Last Updated\*\*: $(date)/g" README.md
+      
+      - name: 📝 Generate API Documentation
+        run: |
+          # Genera documentazione API automatica
+          for app in ai-hrms nose web-hunter; do
+            echo "📝 Generating API docs for $app..."
+            # Qui puoi aggiungere tool come JSDoc, Swagger, etc.
+          done
+      
+      - name: 💾 Commit Documentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "docs: update documentation for v${{ needs.version.outputs.version }}" || exit 0
+          git push origin main

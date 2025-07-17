@@ -1,0 +1,48 @@
+{
+  "name": "main-server",
+  "version": "1.0.0",
+  "description": "Main server platform with AI-HRMS, NOSE, and Web-Hunter applications",
+  "main": "index.js",
+  "scripts": {
+    "release": "semantic-release",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Spen-Zosky/main-server.git"
+  },
+  "keywords": [
+    "microservices",
+    "docker",
+    "nodejs",
+    "react",
+    "mongodb",
+    "hrms",
+    "monitoring"
+  ],
+  "author": "Spen-Zosky",
+  "license": "MIT",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "conventional-changelog-cli": "^4.1.0",
+    "semantic-release": "^22.0.12"
+  },
+  "release": {
+    "branches": [
+      "main",
+      {
+        "name": "develop",
+        "prerelease": "beta"
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
+  }
+}
