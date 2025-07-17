@@ -1,0 +1,159 @@
+version: '3.8'
+services:
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=admin@yourdomain.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik.entrypoints=web"
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  mongodb:
+    image: mongo:5.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)"
+      - "traefik.http.routers.prometheus.entrypoints=web"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana:/etc/grafana/provisioning
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.localhost`)"
+      - "traefik.http.routers.grafana.entrypoints=web"
+
+  # AI-HRMS
+  ai-hrms-backend:
+    build: ./apps/ai-hrms/backend
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/ai-hrms
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongodb
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ai-hrms-api.rule=Host(`localhost`) && PathPrefix(`/api/ai-hrms`)"
+      - "traefik.http.routers.ai-hrms-api.entrypoints=web"
+
+  ai-hrms-frontend:
+    build: ./apps/ai-hrms/frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost/api/ai-hrms
+    depends_on:
+      - ai-hrms-backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ai-hrms.rule=Host(`ai-hrms.localhost`)"
+      - "traefik.http.routers.ai-hrms.entrypoints=web"
+
+  # NOSE
+  nose-backend:
+    build: ./apps/nose/backend
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/nose
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongodb
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nose-api.rule=Host(`localhost`) && PathPrefix(`/api/nose`)"
+      - "traefik.http.routers.nose-api.entrypoints=web"
+
+  nose-frontend:
+    build: ./apps/nose/frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost/api/nose
+    depends_on:
+      - nose-backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nose.rule=Host(`nose.localhost`)"
+      - "traefik.http.routers.nose.entrypoints=web"
+
+  # Web-Hunter
+  web-hunter-backend:
+    build: ./apps/web-hunter/backend
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/web-hunter
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongodb
+      - redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-hunter-api.rule=Host(`localhost`) && PathPrefix(`/api/web-hunter`)"
+      - "traefik.http.routers.web-hunter-api.entrypoints=web"
+
+  web-hunter-frontend:
+    build: ./apps/web-hunter/frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost/api/web-hunter
+    depends_on:
+      - web-hunter-backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-hunter.rule=Host(`web-hunter.localhost`)"
+      - "traefik.http.routers.web-hunter.entrypoints=web"
+
+volumes:
+  redis_data:
+  mongo_data:
+  prometheus_data:
+  grafana_data:

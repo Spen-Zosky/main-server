@@ -1,0 +1,16 @@
+{
+  "prompt": "Quali player dominano il segmento AI applicato all’HR in Europa?",
+  "claude_response": [
+    {
+      "azienda": "Personio",
+      "focus": "HRIS potenziato con AI",
+      "mercato": "DACH e Europa centrale"
+    },
+    {
+      "azienda": "Beamery",
+      "focus": "Talent Intelligence e CRM HR",
+      "mercato": "UK, multinazionali"
+    }
+  ],
+  "commenti": "Claude ha fornito risposte coerenti e aggiornate, ma non ha incluso player emergenti italiani."
+}

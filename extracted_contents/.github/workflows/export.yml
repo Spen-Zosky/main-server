@@ -1,0 +1,19 @@
+name: Export Claude Responses
+
+on:
+  push:
+    paths:
+      - 'examples/risposte_latest.json'
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Convert JSON to Markdown
+        run: |
+          python3 main-server/json_to_md.py examples/risposte_latest.json > examples/export.md

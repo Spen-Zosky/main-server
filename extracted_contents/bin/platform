@@ -1,0 +1,18 @@
+#!/bin/bash
+COMMAND="$1"
+shift
+case "$COMMAND" in
+  claude)
+    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    IN="examples/prompt.claude"
+    OUT="examples/risposte_${TIMESTAMP}.json"
+    echo "Eseguo Claude: input=$IN, output=$OUT"
+    claude --input "$IN" --output "$OUT" "$@"
+    ln -sf "$OUT" examples/risposte_latest.json
+    echo "✅ Salvato in $OUT e link simbolico risposte_latest.json"
+    ;;
+  *)
+    echo "Uso: platform claude [--opzioni-claude]"
+    exit 1
+    ;;
+esac

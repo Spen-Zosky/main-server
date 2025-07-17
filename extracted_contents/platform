@@ -1,0 +1,7 @@
+#!/bin/bash
+case "$1" in
+  init) bash ~/main-server/tools/scripts/platform_init.sh ;;
+  export) bash ~/main-server/tools/scripts/platform_export.sh ;;
+  logs) cat ~/main-server/export_cron.log ;;
+  *) echo "Comandi: init | export | logs" ;;
+esac

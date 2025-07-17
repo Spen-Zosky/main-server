@@ -1,0 +1,10 @@
+Host oci-79
+  HostName 192.0.2.123
+  User ubuntu
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  ForwardAgent yes
+  ServerAliveInterval 60
+  ServerAliveCountMax 5

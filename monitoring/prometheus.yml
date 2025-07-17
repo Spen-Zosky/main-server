@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'main-server'
+    static_configs:
+      - targets: ['localhost:3000']
+  
+  - job_name: 'ai-hrms'
+    static_configs:
+      - targets: ['ai-hrms-backend:3000']
+  
+  - job_name: 'nose'
+    static_configs:
+      - targets: ['nose-backend:3000']
+  
+  - job_name: 'web-hunter'
+    static_configs:
+      - targets: ['web-hunter-backend:3000']

@@ -1,0 +1,16 @@
+{
+  "name": "AI-Dev",
+  "image": "ubuntu:22.04",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-vscode.remote-wsl",
+        "ms-vscode.remote-ssh"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/data,target=/workspace/data,type=bind"
+  ]
+}
