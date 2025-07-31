@@ -48,3 +48,5 @@ tools/automation/*mcp*
 tools/automation/backups/claude_*
 package-main.json
 scripts/personal/
+CLAUDE.md
+docs/
