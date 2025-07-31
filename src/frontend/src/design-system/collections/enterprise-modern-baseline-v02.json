@@ -1,0 +1,159 @@
+{
+  "id": "ds_1737515000000_baseline001",
+  "name": "Enterprise Modern Baseline V02",
+  "description": "Prima raccolta completa del design system Main Server Platform - implementazione baseline con tema enterprise moderno, supporto multi-modulo (AI-HRMS, NOSE, Web-Hunter) e sistema completo di brand identity.",
+  "version": "1.0.0",
+  "createdAt": "2025-01-21T21:30:00.000Z",
+  "updatedAt": "2025-01-21T21:30:00.000Z",
+  "exportedAt": "2025-01-21T21:30:00.000Z",
+  "format": "design-system-v1.0",
+  
+  "theme": {
+    "primaryTheme": "enterprise-modern",
+    "supportedThemes": ["light", "dark"],
+    "darkModeSupport": true,
+    "colorScheme": "auto"
+  },
+
+  "colors": {
+    "primary": {
+      "50": "#f0f9ff",
+      "100": "#e0f2fe", 
+      "200": "#bae6fd",
+      "300": "#7dd3fc",
+      "400": "#38bdf8",
+      "500": "#0ea5e9",
+      "600": "#0284c7",
+      "700": "#0369a1",
+      "800": "#075985",
+      "900": "#0c4a6e"
+    },
+    "secondary": {},
+    "modules": {
+      "ai": {
+        "50": "#e3f2fd",
+        "100": "#bbdefb",
+        "200": "#90caf9",
+        "300": "#64b5f6",
+        "400": "#42a5f5",
+        "500": "#1976d2",
+        "600": "#1565c0",
+        "700": "#0d47a1",
+        "800": "#0a1958",
+        "900": "#061242",
+        "description": "Blue Professional - Human Resources theme"
+      },
+      "nose": {
+        "50": "#e8f5e8",
+        "100": "#c8e6c9",
+        "200": "#a5d6a7",
+        "300": "#81c784",
+        "400": "#66bb6a", 
+        "500": "#388e3c",
+        "600": "#2e7d32",
+        "700": "#1b5e20",
+        "800": "#0a4614",
+        "900": "#052910",
+        "description": "Green Academic - Research theme"
+      },
+      "hunter": {
+        "50": "#fff3e0",
+        "100": "#ffe0b2",
+        "200": "#ffcc02",
+        "300": "#ffb74d",
+        "400": "#ffa726",
+        "500": "#f57c00",
+        "600": "#ef6c00", 
+        "700": "#e65100",
+        "800": "#bf360c",
+        "900": "#8f2708",
+        "description": "Orange Tech - Data analysis theme"
+      }
+    },
+    "neutrals": {
+      "50": "#fafafa",
+      "100": "#f4f4f5",
+      "200": "#e4e4e7",
+      "300": "#d4d4d8",
+      "400": "#a1a1aa",
+      "500": "#71717a",
+      "600": "#52525b",
+      "700": "#3f3f46",
+      "800": "#27272a",
+      "900": "#18181b",
+      "950": "#09090b"
+    },
+    "status": {
+      "running": "#4ade80",
+      "stopped": "#ef4444",
+      "warning": "#f59e0b", 
+      "loading": "#3b82f6",
+      "unknown": "#6b7280",
+      "success": "#10b981",
+      "info": "#06b6d4",
+      "error": "#f87171"
+    },
+    "gradients": {
+      "ai": "linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #90caf9 100%)",
+      "nose": "linear-gradient(135deg, #388e3c 0%, #66bb6a 50%, #a5d6a7 100%)", 
+      "hunter": "linear-gradient(135deg, #f57c00 0%, #ffb74d 50%, #ffcc02 100%)",
+      "purple": "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #9c27b0 100%)",
+      "rainbow": "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)"
+    }
+  },
+
+  "typography": {
+    "fontFamilies": {
+      "primary": "Inter",
+      "secondary": "Playfair Display",
+      "monospace": "Fira Code", 
+      "display": "Cal Sans"
+    },
+    "fontSizes": {
+      "xs": ["0.75rem", {"lineHeight": "1rem"}],
+      "sm": ["0.875rem", {"lineHeight": "1.25rem"}],
+      "base": ["1rem", {"lineHeight": "1.5rem"}], 
+      "lg": ["1.125rem", {"lineHeight": "1.75rem"}],
+      "xl": ["1.25rem", {"lineHeight": "1.75rem"}],
+      "2xl": ["1.5rem", {"lineHeight": "2rem"}],
+      "3xl": ["1.875rem", {"lineHeight": "2.25rem"}],
+      "4xl": ["2.25rem", {"lineHeight": "2.5rem"}],
+      "5xl": ["3rem", {"lineHeight": "1"}],
+      "6xl": ["3.75rem", {"lineHeight": "1"}],
+      "7xl": ["4.5rem", {"lineHeight": "1"}],
+      "8xl": ["6rem", {"lineHeight": "1"}],
+      "9xl": ["8rem", {"lineHeight": "1"}]
+    }
+  },
+
+  "components": {
+    "buttons": {
+      "variants": ["primary", "secondary", "outline", "ghost", "ai", "nose", "hunter"],
+      "sizes": ["sm", "md", "lg", "xl"],
+      "states": ["default", "hover", "active", "disabled", "loading"],
+      "features": ["framer-motion-animations", "theme-aware", "icon-support", "loading-states"]
+    },
+    "cards": {
+      "variants": ["default", "glass", "elevated"],
+      "themes": ["ai", "nose", "hunter", "neutral"],
+      "effects": ["hover-lift", "glow", "scale", "shadow"],
+      "features": ["glass-morphism", "gradient-overlays", "interactive-animations"]
+    }
+  },
+
+  "animations": {
+    "keyframes": [
+      "float", "pulse", "slideInUp", "fadeInScale", "fadeIn", "fadeInUp", 
+      "fadeInDown", "scaleIn", "slideInLeft", "slideInRight", "wiggle", 
+      "glow", "shimmer", "rotate", "bounce"
+    ]
+  },
+
+  "metadata": {
+    "author": "Main Server Platform Team",
+    "project": "AI-HRMS + NOSE + Web-Hunter Platform",
+    "totalColorTokens": 40,
+    "totalComponents": 8,
+    "totalAnimations": 15
+  }
+}

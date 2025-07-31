@@ -1,0 +1,128 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# 🎨 Main Server Platform Design System
+
+Welcome to the **Main Server Platform Design System** - a comprehensive, enterprise-grade component library built for modern web applications.
+
+## 🚀 What's Inside
+
+Our design system follows atomic design principles and includes:
+
+### ⚛️ **Atoms**
+- **Button** - Primary interaction elements with multiple variants
+- **Text** - Typography components with semantic hierarchy  
+- **Input** - Form input elements with validation
+- **Card** - Content containers with elevation
+- **Badge** - Status and label indicators
+
+### 🧬 **Molecules** 
+- **SearchBox** - Complete search interface
+- **Form** - Form containers with validation
+
+### 🦠 **Organisms**
+- **Header** - Complete navigation headers
+
+## 🎯 **Theme System**
+
+Our design system supports **4 brand themes**:
+
+- **⚡ Default** - Clean, professional base theme
+- **🤖 AI-HRMS** - Intelligent blue for HR systems  
+- **🔬 NOSE Research** - Natural green for academic research
+- **🕸️ Web-Hunter** - Dynamic orange for data mining
+
+**Use the Theme Switcher in the toolbar** to see how components adapt to different brand identities!
+
+## 🎨 **Design Tokens**
+
+All components are built using a comprehensive design token system:
+
+- **Colors** - Brand colors, semantic colors, and module-specific palettes
+- **Typography** - Font families, sizes, and hierarchy
+- **Spacing** - Consistent spacing scale and semantic spacing
+- **Shadows** - Elevation and depth system
+- **Border Radius** - Consistent rounding system
+
+## ♿ **Accessibility**
+
+Every component is built with accessibility in mind:
+
+- ✅ **WCAG 2.1 AA** compliant color contrast ratios
+- ✅ **Keyboard navigation** support
+- ✅ **Screen reader** compatibility
+- ✅ **Focus management** with clear indicators
+- ✅ **Semantic HTML** structure
+
+## 📱 **Responsive Design**
+
+All components are **mobile-first** and fully responsive:
+
+- **Mobile** (375px+)
+- **Tablet** (768px+) 
+- **Desktop** (1024px+)
+- **Dashboard** (1440px+)
+- **Ultrawide** (2560px+)
+
+## 🛠️ **How to Use**
+
+### 1. Import Components
+```javascript
+import { Button, Text, Card } from '../components/atoms';
+import { SearchBox, Form } from '../components/molecules';
+import { Header } from '../components/organisms';
+```
+
+### 2. Use Design Tokens
+```javascript
+import { designTokens } from '../design-system/tokens';
+
+// Use spacing
+<div style={{ padding: designTokens.spacing.scale[4] }}>
+
+// Use colors  
+<div style={{ color: designTokens.colors.brand.primary }}>
+
+// Use typography
+<div style={{ fontFamily: designTokens.typography.fonts.primary }}>
+```
+
+### 3. Apply Themes
+```javascript
+// Components automatically respond to theme context
+<Button variant="primary" theme="ai">AI-HRMS Button</Button>
+<Button variant="primary" theme="nose">NOSE Research Button</Button>
+```
+
+## 🧪 **Testing & Quality**
+
+- **Stories** for every component variation
+- **Accessibility testing** with automated checks
+- **Visual regression testing** across themes
+- **Responsive testing** across viewports
+- **Interaction testing** for user flows
+
+## 📖 **Documentation Standards**
+
+Each component includes:
+
+- **Props API** documentation
+- **Usage examples** and code snippets
+- **Do's and Don'ts** guidelines
+- **Accessibility notes**
+- **Design guidelines**
+
+---
+
+## 🎉 **Get Started**
+
+**Navigate through the sidebar** to explore:
+
+1. **Atoms** - Start with basic building blocks
+2. **Molecules** - See how atoms combine
+3. **Organisms** - Complete interface sections
+
+**Try the Theme Switcher** in the toolbar to see our brand system in action!
+
+**Happy designing!** 🚀

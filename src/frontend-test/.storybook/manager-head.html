@@ -1,0 +1,10 @@
+<script>
+  // Allow iframe embedding from any origin for development
+  if (window.self !== window.top) {
+    // Running in iframe - ensure proper communication
+    window.addEventListener('message', function(event) {
+      // Handle cross-origin messages if needed
+      console.log('Storybook iframe received message:', event);
+    });
+  }
+</script>

@@ -1,0 +1,217 @@
+/**
+ * Design Tokens CSS Integration
+ * Imports generated CSS variables and provides utility classes
+ */
+
+/* Import generated CSS variables */
+@import './build/css/variables.css';
+
+/**
+ * Module-specific CSS custom properties for dynamic theming
+ * These can be overridden at runtime to switch between module themes
+ */
+
+/* Default theme (uses brand colors) */
+:root {
+  --current-primary: var(--color-brand-primary);
+  --current-secondary: var(--color-brand-secondary);  
+  --current-accent: var(--color-brand-accent);
+}
+
+/* AI-HRMS Module Theme */
+[data-theme="ai"],
+.theme-ai {
+  --current-primary: var(--color-modules-ai-primary);
+  --current-secondary: var(--color-modules-ai-light);
+  --current-accent: var(--color-modules-ai-dark);
+  --current-gradient: var(--color-modules-ai-gradient);
+}
+
+/* NOSE Research Module Theme */
+[data-theme="nose"],
+.theme-nose {
+  --current-primary: var(--color-modules-nose-primary);
+  --current-secondary: var(--color-modules-nose-light);
+  --current-accent: var(--color-modules-nose-dark);
+  --current-gradient: var(--color-modules-nose-gradient);
+}
+
+/* Web-Hunter Module Theme */
+[data-theme="hunter"],
+.theme-hunter {
+  --current-primary: var(--color-modules-hunter-primary);
+  --current-secondary: var(--color-modules-hunter-light);
+  --current-accent: var(--color-modules-hunter-dark);
+  --current-gradient: var(--color-modules-hunter-gradient);
+}
+
+/* Dark theme overrides */
+[data-theme-mode="dark"] {
+  --current-bg: var(--color-surface-background-dark);
+  --current-surface: var(--color-surface-paper-dark);
+  --current-text-primary: var(--color-text-primary-dark);
+  --current-text-secondary: var(--color-text-secondary-dark);
+  --current-text-disabled: var(--color-text-disabled-dark);
+  --current-overlay: var(--color-surface-overlay-dark);
+}
+
+/* Light theme (default) */
+[data-theme-mode="light"],
+:root {
+  --current-bg: var(--color-surface-background-light);
+  --current-surface: var(--color-surface-paper-light);
+  --current-text-primary: var(--color-text-primary-light);
+  --current-text-secondary: var(--color-text-secondary-light);
+  --current-text-disabled: var(--color-text-disabled-light);
+  --current-overlay: var(--color-surface-overlay-light);
+}
+
+/**
+ * Typography Utility Classes
+ * Based on design token text styles
+ */
+
+.text-display {
+  font-size: var(--typography-text-styles-display-font-size);
+  font-weight: var(--typography-text-styles-display-font-weight);
+  line-height: var(--typography-text-styles-display-line-height);
+  letter-spacing: var(--typography-text-styles-display-letter-spacing);
+  font-family: var(--typography-text-styles-display-font-family);
+}
+
+.text-h1 {
+  font-size: var(--typography-text-styles-h1-font-size);
+  font-weight: var(--typography-text-styles-h1-font-weight);
+  line-height: var(--typography-text-styles-h1-line-height);
+  letter-spacing: var(--typography-text-styles-h1-letter-spacing);
+  font-family: var(--typography-text-styles-h1-font-family);
+}
+
+.text-h2 {
+  font-size: var(--typography-text-styles-h2-font-size);
+  font-weight: var(--typography-text-styles-h2-font-weight);
+  line-height: var(--typography-text-styles-h2-line-height);
+  font-family: var(--typography-text-styles-h2-font-family);
+}
+
+.text-h3 {
+  font-size: var(--typography-text-styles-h3-font-size);
+  font-weight: var(--typography-text-styles-h3-font-weight);
+  line-height: var(--typography-text-styles-h3-line-height);
+  font-family: var(--typography-text-styles-h3-font-family);
+}
+
+.text-h4 {
+  font-size: var(--typography-text-styles-h4-font-size);
+  font-weight: var(--typography-text-styles-h4-font-weight);
+  line-height: var(--typography-text-styles-h4-line-height);
+  font-family: var(--typography-text-styles-h4-font-family);
+}
+
+.text-body {
+  font-size: var(--typography-text-styles-body-font-size);
+  font-weight: var(--typography-text-styles-body-font-weight);
+  line-height: var(--typography-text-styles-body-line-height);
+  font-family: var(--typography-text-styles-body-font-family);
+}
+
+.text-body-large {
+  font-size: var(--typography-text-styles-body-large-font-size);
+  font-weight: var(--typography-text-styles-body-large-font-weight);
+  line-height: var(--typography-text-styles-body-large-line-height);
+  font-family: var(--typography-text-styles-body-large-font-family);
+}
+
+.text-caption {
+  font-size: var(--typography-text-styles-caption-font-size);
+  font-weight: var(--typography-text-styles-caption-font-weight);
+  line-height: var(--typography-text-styles-caption-line-height);
+  font-family: var(--typography-text-styles-caption-font-family);
+}
+
+.text-code {
+  font-size: var(--typography-text-styles-code-font-size);
+  font-weight: var(--typography-text-styles-code-font-weight);
+  line-height: var(--typography-text-styles-code-line-height);
+  font-family: var(--typography-text-styles-code-font-family);
+}
+
+/**
+ * Spacing Utility Classes
+ * Based on design token spacing scale
+ */
+
+/* Padding utilities */
+.p-0 { padding: var(--spacing-scale-0); }
+.p-1 { padding: var(--spacing-scale-1); }
+.p-2 { padding: var(--spacing-scale-2); }
+.p-3 { padding: var(--spacing-scale-3); }
+.p-4 { padding: var(--spacing-scale-4); }
+.p-5 { padding: var(--spacing-scale-5); }
+.p-6 { padding: var(--spacing-scale-6); }
+.p-8 { padding: var(--spacing-scale-8); }
+
+/* Margin utilities */
+.m-0 { margin: var(--spacing-scale-0); }
+.m-1 { margin: var(--spacing-scale-1); }
+.m-2 { margin: var(--spacing-scale-2); }
+.m-3 { margin: var(--spacing-scale-3); }
+.m-4 { margin: var(--spacing-scale-4); }
+.m-5 { margin: var(--spacing-scale-5); }
+.m-6 { margin: var(--spacing-scale-6); }
+.m-8 { margin: var(--spacing-scale-8); }
+
+/* Gap utilities for flex/grid */
+.gap-0 { gap: var(--spacing-scale-0); }
+.gap-1 { gap: var(--spacing-scale-1); }
+.gap-2 { gap: var(--spacing-scale-2); }
+.gap-3 { gap: var(--spacing-scale-3); }
+.gap-4 { gap: var(--spacing-scale-4); }
+.gap-5 { gap: var(--spacing-scale-5); }
+.gap-6 { gap: var(--spacing-scale-6); }
+.gap-8 { gap: var(--spacing-scale-8); }
+
+/**
+ * Border Radius Utilities
+ */
+
+.rounded-none { border-radius: var(--border-radius-none); }
+.rounded-sm { border-radius: var(--border-radius-sm); }
+.rounded { border-radius: var(--border-radius-base); }
+.rounded-md { border-radius: var(--border-radius-md); }
+.rounded-lg { border-radius: var(--border-radius-lg); }
+.rounded-xl { border-radius: var(--border-radius-xl); }
+.rounded-2xl { border-radius: var(--border-radius-2xl); }
+.rounded-3xl { border-radius: var(--border-radius-3xl); }
+.rounded-full { border-radius: var(--border-radius-full); }
+
+/**
+ * Shadow Utilities
+ */
+
+.shadow-none { box-shadow: var(--shadows-none); }
+.shadow-sm { box-shadow: var(--shadows-sm); }
+.shadow { box-shadow: var(--shadows-base); }
+.shadow-md { box-shadow: var(--shadows-md); }
+.shadow-lg { box-shadow: var(--shadows-lg); }
+.shadow-xl { box-shadow: var(--shadows-xl); }
+.shadow-2xl { box-shadow: var(--shadows-2xl); }
+
+/**
+ * Semantic Color Classes
+ */
+
+.text-success { color: var(--color-semantic-success); }
+.text-warning { color: var(--color-semantic-warning); }
+.text-error { color: var(--color-semantic-error); }
+.text-info { color: var(--color-semantic-info); }
+
+.bg-success { background-color: var(--color-semantic-success); }
+.bg-warning { background-color: var(--color-semantic-warning); }
+.bg-error { background-color: var(--color-semantic-error); }
+.bg-info { background-color: var(--color-semantic-info); }
+
+.border-success { border-color: var(--color-semantic-success); }
+.border-warning { border-color: var(--color-semantic-warning); }
+.border-error { border-color: var(--color-semantic-error); }
+.border-info { border-color: var(--color-semantic-info); }

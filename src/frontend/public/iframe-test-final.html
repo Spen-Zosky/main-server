@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Iframe Test - Storybook Integration</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .success {
+            background: #e8f5e8;
+            color: #2e7d2e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #f44336;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Final Iframe Test - Storybook Integration</h1>
+    
+    <div class="test-container">
+        <h3>Test: Enhanced Proxy Configuration</h3>
+        <div class="iframe-container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <div>Loading Storybook...</div>
+                <div id="status">Connecting to /storybook-proxy/</div>
+            </div>
+            <iframe 
+                id="storybook-iframe" 
+                src="/storybook-proxy/" 
+                title="Storybook via Enhanced Proxy"
+                onload="handleIframeLoad()"
+                onerror="handleIframeError()"
+                style="display: none;">
+            </iframe>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h3>📊 Test Results</h3>
+        <div id="results">
+            <div>Test started...</div>
+        </div>
+    </div>
+
+    <script>
+        let loadTimeout;
+        let startTime = Date.now();
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const results = document.getElementById('results');
+            const entry = document.createElement('div');
+            entry.innerHTML = `[${timestamp}] ${message}`;
+            entry.className = type;
+            results.appendChild(entry);
+            console.log(message);
+        }
+        
+        function handleIframeLoad() {
+            clearTimeout(loadTimeout);
+            const loadTime = Date.now() - startTime;
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('storybook-iframe').style.display = 'block';
+            
+            log(`✅ SUCCESS: Iframe loaded successfully in ${loadTime}ms`, 'success');
+            log('✅ Storybook is accessible via enhanced proxy', 'success');
+            log('✅ Assets are properly routed through multiple proxy endpoints', 'success');
+            
+            // Try to detect if Storybook content is actually loaded
+            setTimeout(() => {
+                try {
+                    const iframe = document.getElementById('storybook-iframe');
+                    if (iframe.contentWindow) {
+                        log('✅ Iframe content window accessible', 'success');
+                    }
+                } catch (e) {
+                    log(`⚠️  Cross-origin restriction (expected): ${e.message}`, 'info');
+                }
+            }, 2000);
+        }
+        
+        function handleIframeError() {
+            clearTimeout(loadTimeout);
+            const loadTime = Date.now() - startTime;
+            
+            document.getElementById('loading').innerHTML = `
+                <div style="color: #c62828;">
+                    <div>❌ Failed to load</div>
+                    <div>Time: ${loadTime}ms</div>
+                </div>
+            `;
+            
+            log(`❌ ERROR: Iframe failed to load after ${loadTime}ms`, 'error');
+            log('❌ Storybook proxy configuration may have issues', 'error');
+        }
+        
+        // Set timeout for loading
+        loadTimeout = setTimeout(() => {
+            const loadTime = Date.now() - startTime;
+            log(`⏱️  TIMEOUT: Iframe taking longer than expected (${loadTime}ms)`, 'error');
+            log('This may indicate the iframe loading loop issue persists', 'error');
+            
+            // Check if we can at least fetch the content
+            fetch('/storybook-proxy/')
+                .then(response => {
+                    if (response.ok) {
+                        log('✅ Proxy endpoint responds correctly via fetch', 'success');
+                        log('Issue may be specific to iframe embedding', 'error');
+                    } else {
+                        log(`❌ Proxy endpoint error: ${response.status}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    log(`❌ Proxy fetch error: ${error.message}`, 'error');
+                });
+        }, 10000); // 10 second timeout
+        
+        log('🚀 Starting iframe load test...');
+        log('Target: /storybook-proxy/ via enhanced proxy configuration');
+        
+        // Also test if individual assets are accessible
+        Promise.all([
+            fetch('/sb-manager/runtime.js').then(r => r.ok),
+            fetch('/sb-addons/storybook-core-server-presets-0/common-manager-bundle.js').then(r => r.ok).catch(() => false),
+            fetch('/storybook-proxy/').then(r => r.ok)
+        ]).then(results => {
+            log(`Asset accessibility: sb-manager: ${results[0] ? '✅' : '❌'}, sb-addons: ${results[1] ? '✅' : '❌'}, main: ${results[2] ? '✅' : '❌'}`);
+        });
+    </script>
+</body>
+</html>

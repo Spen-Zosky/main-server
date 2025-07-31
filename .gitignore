@@ -1,0 +1,58 @@
+# Strumenti di sviluppo
+.claude/
+.serena/
+.vscode/
+*.code-workspace
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+session-logs/
+*.pid
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+dist-test/
+build/
+
+# Backup
+*.tar.gz
+*-backup/
+
+# Test output
+coverage/
+.nyc_output/
+
+# PM2
+ecosystem.config.cjs
+
+# Frontend builds
+src/frontend/dist/
+src/frontend/dist-test/
+src/frontend/node_modules/
+src/frontend/.env*
+!src/frontend/.env.example
+
+# Misc
+.DS_Store
+*.swp
+*~
+
+# Claude Code CLI / MCP
+*mcp*.json
+*mcp*.js
+*mcp*.cjs
+*claude*.js
+*claude*.cjs
+tools/automation/*claude*
+tools/automation/*mcp*
+tools/automation/backups/claude_*
+package-main.json

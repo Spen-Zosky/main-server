@@ -1,0 +1,227 @@
+{
+  "spacing": {
+    "scale": {
+      "0": { 
+        "value": "0px",
+        "comment": "No spacing"
+      },
+      "1": { 
+        "value": "0.25rem",
+        "comment": "4px - Minimal spacing for tight layouts"
+      },
+      "2": { 
+        "value": "0.5rem",
+        "comment": "8px - Small spacing between related elements"
+      },
+      "3": { 
+        "value": "0.75rem",
+        "comment": "12px - Medium-small spacing"
+      },
+      "4": { 
+        "value": "1rem",
+        "comment": "16px - Base spacing unit (1rem)"
+      },
+      "5": { 
+        "value": "1.25rem",
+        "comment": "20px - Medium spacing"
+      },
+      "6": { 
+        "value": "1.5rem",
+        "comment": "24px - Large spacing between sections"
+      },
+      "8": { 
+        "value": "2rem",
+        "comment": "32px - Extra large spacing"
+      },
+      "10": { 
+        "value": "2.5rem",
+        "comment": "40px - Section spacing"
+      },
+      "12": { 
+        "value": "3rem",
+        "comment": "48px - Large section spacing"
+      },
+      "16": { 
+        "value": "4rem",
+        "comment": "64px - Page section spacing"
+      },
+      "20": { 
+        "value": "5rem",
+        "comment": "80px - Hero section spacing"
+      },
+      "24": { 
+        "value": "6rem",
+        "comment": "96px - Large page section spacing"
+      },
+      "32": { 
+        "value": "8rem",
+        "comment": "128px - Extra large page spacing"
+      }
+    },
+    
+    "semantic": {
+      "component": {
+        "padding": {
+          "sm": { 
+            "value": "{spacing.scale.2.value}",
+            "comment": "Small component padding"
+          },
+          "md": { 
+            "value": "{spacing.scale.4.value}",
+            "comment": "Medium component padding"
+          },
+          "lg": { 
+            "value": "{spacing.scale.6.value}",
+            "comment": "Large component padding"
+          },
+          "xl": { 
+            "value": "{spacing.scale.8.value}",
+            "comment": "Extra large component padding"
+          }
+        },
+        "margin": {
+          "sm": { 
+            "value": "{spacing.scale.2.value}",
+            "comment": "Small component margin"
+          },
+          "md": { 
+            "value": "{spacing.scale.4.value}",
+            "comment": "Medium component margin"
+          },
+          "lg": { 
+            "value": "{spacing.scale.6.value}",
+            "comment": "Large component margin"
+          },
+          "xl": { 
+            "value": "{spacing.scale.8.value}",
+            "comment": "Extra large component margin"
+          }
+        }
+      },
+      
+      "layout": {
+        "container": {
+          "sm": { 
+            "value": "{spacing.scale.4.value}",
+            "comment": "Small container padding"
+          },
+          "md": { 
+            "value": "{spacing.scale.6.value}",
+            "comment": "Medium container padding"
+          },
+          "lg": { 
+            "value": "{spacing.scale.8.value}",
+            "comment": "Large container padding"
+          },
+          "xl": { 
+            "value": "{spacing.scale.12.value}",
+            "comment": "Extra large container padding"
+          }
+        },
+        "section": {
+          "sm": { 
+            "value": "{spacing.scale.8.value}",
+            "comment": "Small section spacing"
+          },
+          "md": { 
+            "value": "{spacing.scale.12.value}",
+            "comment": "Medium section spacing"
+          },
+          "lg": { 
+            "value": "{spacing.scale.16.value}",
+            "comment": "Large section spacing"
+          },
+          "xl": { 
+            "value": "{spacing.scale.24.value}",
+            "comment": "Extra large section spacing"
+          }
+        }
+      },
+      
+      "grid": {
+        "gap": {
+          "sm": { 
+            "value": "{spacing.scale.2.value}",
+            "comment": "Small grid gap"
+          },
+          "md": { 
+            "value": "{spacing.scale.4.value}",
+            "comment": "Medium grid gap"
+          },
+          "lg": { 
+            "value": "{spacing.scale.6.value}",
+            "comment": "Large grid gap"
+          },
+          "xl": { 
+            "value": "{spacing.scale.8.value}",
+            "comment": "Extra large grid gap"
+          }
+        }
+      }
+    }
+  },
+  
+  "borderRadius": {
+    "none": { "value": "0px" },
+    "sm": { 
+      "value": "0.125rem",
+      "comment": "2px - Small border radius"
+    },
+    "base": { 
+      "value": "0.25rem",
+      "comment": "4px - Base border radius"
+    },
+    "md": { 
+      "value": "0.375rem",
+      "comment": "6px - Medium border radius"
+    },
+    "lg": { 
+      "value": "0.5rem",
+      "comment": "8px - Large border radius" 
+    },
+    "xl": { 
+      "value": "0.75rem",
+      "comment": "12px - Extra large border radius"
+    },
+    "2xl": { 
+      "value": "1rem",
+      "comment": "16px - 2X large border radius"
+    },
+    "3xl": { 
+      "value": "1.5rem",
+      "comment": "24px - 3X large border radius"
+    },
+    "full": { 
+      "value": "9999px",
+      "comment": "Full circular border radius"
+    }
+  },
+  
+  "shadows": {
+    "none": { "value": "none" },
+    "sm": { 
+      "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      "comment": "Small shadow for subtle elevation"
+    },
+    "base": { 
+      "value": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+      "comment": "Base shadow for cards and panels"
+    },
+    "md": { 
+      "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "comment": "Medium shadow for elevated elements"
+    },
+    "lg": { 
+      "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "comment": "Large shadow for modals and dropdowns"
+    },
+    "xl": { 
+      "value": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      "comment": "Extra large shadow for major elevation"
+    },
+    "2xl": { 
+      "value": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+      "comment": "2X large shadow for overlays"
+    }
+  }
+}

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Main Server Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .welcome-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-card.ai-hrms {
+            border-left-color: #1976d2;
+        }
+        
+        .module-card.nose {
+            border-left-color: #388e3c;
+        }
+        
+        .module-card.web-hunter {
+            border-left-color: #f57c00;
+        }
+        
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .module-description {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .module-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #388e3c;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #f57c00;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .status-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .status-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .status-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">🚀 Main Server Platform</div>
+            <div class="user-info">
+                <span id="username">Utente</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Benvenuto nella Dashboard</h1>
+            <p>Gestisci tutti i moduli della Main Server Platform da qui.</p>
+            <div id="auth-status" class="alert alert-info" style="margin-top: 15px;">
+                ✅ Autenticazione JWT attiva
+            </div>
+        </div>
+        
+        <div class="modules-grid">
+            <div class="module-card ai-hrms">
+                <div class="module-title">
+                    🤖 AI-HRMS
+                    <span style="font-size: 0.8rem; background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 12px;">Active</span>
+                </div>
+                <div class="module-description">
+                    Sistema intelligente per la gestione delle risorse umane con AI integrata.
+                </div>
+                <div class="module-actions">
+                    <a href="#" class="btn btn-primary">Gestione Dipendenti</a>
+                    <a href="#" class="btn btn-primary">Presenze</a>
+                    <a href="#" class="btn btn-primary">Payroll</a>
+                </div>
+            </div>
+            
+            <div class="module-card nose">
+                <div class="module-title">
+                    🔍 NOSE
+                    <span style="font-size: 0.8rem; background: #e8f5e8; color: #388e3c; padding: 2px 8px; border-radius: 12px;">Active</span>
+                </div>
+                <div class="module-description">
+                    Assistente per ricerca scientifica, umanistica e industriale.
+                </div>
+                <div class="module-actions">
+                    <a href="#" class="btn btn-success">Nuova Ricerca</a>
+                    <a href="#" class="btn btn-success">Progetti</a>
+                    <a href="#" class="btn btn-success">Analytics</a>
+                </div>
+            </div>
+            
+            <div class="module-card web-hunter">
+                <div class="module-title">
+                    🕷️ Web-Hunter
+                    <span style="font-size: 0.8rem; background: #fff3e0; color: #f57c00; padding: 2px 8px; border-radius: 12px;">Active</span>
+                </div>
+                <div class="module-description">
+                    Framework per acquisizione dati e machine learning.
+                </div>
+                <div class="module-actions">
+                    <a href="#" class="btn btn-warning">Nuovo Job</a>
+                    <a href="#" class="btn btn-warning">Scrapers</a>
+                    <a href="#" class="btn btn-warning">Data Mining</a>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+            <h3 style="margin-bottom: 20px; color: #1e293b;">📊 System Status</h3>
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-value" style="color: #388e3c;">99.9%</div>
+                    <div class="status-label">Uptime</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" style="color: #1976d2;">12</div>
+                    <div class="status-label">Active Jobs</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" style="color: #f57c00;">2.3K</div>
+                    <div class="status-label">Data Records</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" style="color: #9c27b0;">127</div>
+                    <div class="status-label">Users</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; color: #6c757d;">
+            <p>© 2025 enzospenuso.com - Main Server Platform v1.0.0</p>
+            <p>🌐 Accesso da: <span id="current-ip">79.72.47.188</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Verifica autenticazione al caricamento
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('authToken');
+            const username = localStorage.getItem('username') || 'Utente';
+            
+            if (!token) {
+                alert('⚠️ Sessione scaduta. Effettua nuovamente il login.');
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            // Mostra username se disponibile
+            document.getElementById('username').textContent = username;
+            
+            // Test connettività backend
+            testBackendConnection();
+        });
+        
+        function logout() {
+            if (confirm('Sei sicuro di voler effettuare il logout?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('refreshToken');
+                localStorage.removeItem('username');
+                
+                alert('✅ Logout effettuato con successo.');
+                window.location.href = '/';
+            }
+        }
+        
+        async function testBackendConnection() {
+            try {
+                const response = await fetch('http://79.72.47.188:3000/health');
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('✅ Backend connesso:', data.message);
+                    document.getElementById('auth-status').innerHTML = 
+                        '✅ Sistema operativo - Backend online, JWT attivo';
+                    document.getElementById('auth-status').className = 'alert alert-info';
+                }
+            } catch (error) {
+                console.error('⚠️ Backend non raggiungibile:', error);
+                document.getElementById('auth-status').innerHTML = 
+                    '⚠️ Problema di connessione backend. Alcune funzionalità potrebbero non essere disponibili.';
+                document.getElementById('auth-status').className = 'alert alert-warning';
+            }
+        }
+        
+        // Aggiorna timestamp ogni minuto
+        setInterval(() => {
+            console.log('Dashboard attiva:', new Date().toLocaleTimeString());
+        }, 60000);
+    </script>
+</body>
+</html>

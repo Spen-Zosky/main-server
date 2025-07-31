@@ -1,0 +1,173 @@
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "value": "#1976d2",
+        "comment": "Main brand primary color - represents trust, reliability, and professionalism"
+      },
+      "secondary": {
+        "value": "#dc004e", 
+        "comment": "Brand secondary color for accents and highlights"
+      },
+      "accent": {
+        "value": "#f57c00",
+        "comment": "Brand accent color for call-to-action elements"
+      }
+    },
+    
+    "modules": {
+      "ai": {
+        "primary": {
+          "value": "#1976d2",
+          "comment": "AI-HRMS module primary color - intelligence and automation"
+        },
+        "light": {
+          "value": "#42a5f5",
+          "comment": "AI module light variant"
+        },
+        "dark": {
+          "value": "#1565c0",
+          "comment": "AI module dark variant"
+        },
+        "gradient": {
+          "value": "linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)",
+          "comment": "AI module brand gradient"
+        }
+      },
+      "nose": {
+        "primary": {
+          "value": "#388e3c",
+          "comment": "NOSE Research module primary color - growth and discovery"
+        },
+        "light": {
+          "value": "#66bb6a",
+          "comment": "NOSE module light variant"
+        },
+        "dark": {
+          "value": "#2e7d32",
+          "comment": "NOSE module dark variant"
+        },
+        "gradient": {
+          "value": "linear-gradient(135deg, #388e3c 0%, #66bb6a 100%)",
+          "comment": "NOSE module brand gradient"
+        }
+      },
+      "hunter": {
+        "primary": {
+          "value": "#f57c00",
+          "comment": "Web-Hunter module primary color - energy and data mining"
+        },
+        "light": {
+          "value": "#ffb74d",
+          "comment": "Hunter module light variant"
+        },
+        "dark": {
+          "value": "#ef6c00",
+          "comment": "Hunter module dark variant"
+        },
+        "gradient": {
+          "value": "linear-gradient(135deg, #f57c00 0%, #ffb74d 100%)",
+          "comment": "Hunter module brand gradient"
+        }
+      }
+    },
+    
+    "semantic": {
+      "success": {
+        "value": "#4caf50",
+        "comment": "Success state color - positive actions and confirmations"
+      },
+      "warning": {
+        "value": "#ff9800",
+        "comment": "Warning state color - caution and attention needed"
+      },
+      "error": {
+        "value": "#f44336",
+        "comment": "Error state color - critical issues and failures"
+      },
+      "info": {
+        "value": "#2196f3",
+        "comment": "Information color - neutral informational content"
+      }
+    },
+    
+    "neutral": {
+      "50": { "value": "#fafafa" },
+      "100": { "value": "#f5f5f5" },
+      "200": { "value": "#eeeeee" },
+      "300": { "value": "#e0e0e0" },
+      "400": { "value": "#bdbdbd" },
+      "500": { "value": "#9e9e9e" },
+      "600": { "value": "#757575" },
+      "700": { "value": "#616161" },
+      "800": { "value": "#424242" },
+      "900": { "value": "#212121" }
+    },
+    
+    "surface": {
+      "background": {
+        "light": {
+          "value": "#ffffff",
+          "comment": "Light theme background"
+        },
+        "dark": {
+          "value": "#121212",
+          "comment": "Dark theme background"
+        }
+      },
+      "paper": {
+        "light": {
+          "value": "#ffffff",
+          "comment": "Light theme surface/paper"
+        },
+        "dark": {
+          "value": "#1e1e1e",
+          "comment": "Dark theme surface/paper"
+        }
+      },
+      "overlay": {
+        "light": {
+          "value": "rgba(0, 0, 0, 0.5)",
+          "comment": "Light theme overlay"
+        },
+        "dark": {
+          "value": "rgba(255, 255, 255, 0.1)",
+          "comment": "Dark theme overlay"
+        }
+      }
+    },
+    
+    "text": {
+      "primary": {
+        "light": {
+          "value": "#212121",
+          "comment": "Primary text color in light theme"
+        },
+        "dark": {
+          "value": "#e0e0e0",
+          "comment": "Primary text color in dark theme"
+        }
+      },
+      "secondary": {
+        "light": {
+          "value": "#757575",
+          "comment": "Secondary text color in light theme"
+        },
+        "dark": {
+          "value": "#9e9e9e",
+          "comment": "Secondary text color in dark theme"
+        }
+      },
+      "disabled": {
+        "light": {
+          "value": "#bdbdbd",
+          "comment": "Disabled text color in light theme"
+        },
+        "dark": {
+          "value": "#616161",
+          "comment": "Disabled text color in dark theme"
+        }
+      }
+    }
+  }
+}

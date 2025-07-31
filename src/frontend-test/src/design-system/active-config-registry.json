@@ -1,0 +1,73 @@
+{
+  "activeConfiguration": {
+    "id": "modern-enterprise-active-20250721",
+    "name": "Modern Enterprise Active",
+    "status": "active|default",
+    "version": "2.0.0",
+    "registeredAt": "2025-07-21T23:38:00.000Z",
+    "author": "System",
+    "environment": "production"
+  },
+  "backups": {
+    "current": {
+      "landingPage": "/pages/LandingPage.jsx.backup-modern-20250721",
+      "components": "/components/layout/RootLayout.jsx",
+      "designSystem": "/design-system/collections/modern-enterprise-active-20250721.json"
+    },
+    "previous": {
+      "removed": "/pages/LandingPage.jsx.backup (eliminato come richiesto)"
+    }
+  },
+  "features": {
+    "hamburgerPosition": "left",
+    "hamburgerVisibility": "universal (mobile + desktop)",
+    "themeToggle": "complete (desktop + mobile drawer)",
+    "footerFormat": "enzospenuso.com - Main Server Platform",
+    "serverSideRendering": "required",
+    "designSystem": "modern enterprise",
+    "glassMorphism": true,
+    "gradientText": true,
+    "responsiveDesign": true,
+    "accessibility": true
+  },
+  "technicalSpecs": {
+    "frontend": {
+      "framework": "React 18.3.1",
+      "buildTool": "Vite 5.4.19",
+      "styling": "Material-UI 5 + TailwindCSS",
+      "port": "5173 (standard)"
+    },
+    "designTokens": {
+      "primaryColors": ["#6366f1", "#8b5cf6", "#ec4899"],
+      "neutrals": "Slate scale",
+      "modules": {
+        "ai": "#6366f1",
+        "nose": "#10b981", 
+        "hunter": "#f59e0b"
+      }
+    }
+  },
+  "changelog": [
+    {
+      "date": "2025-07-21T23:38:00.000Z",
+      "action": "SET_ACTIVE_DEFAULT",
+      "description": "Configurazione moderna enterprise impostata come attiva e default",
+      "changes": [
+        "Hamburger menu spostato a sinistra - universale",
+        "Design system moderno con glassmorphism",
+        "Palette colori enterprise calibrata",
+        "Theme switching completo",
+        "Footer con formato richiesto",
+        "Backup precedente rimosso, nuovo backup creato"
+      ]
+    }
+  ],
+  "notes": [
+    "Configurazione salvata e registrata come richiesto",
+    "Tutti gli elementi precedenti mantenuti durante il redesign", 
+    "Sistema pronto per server-side rendering",
+    "Design system completo e documentato",
+    "Backup della configurazione attuale creato",
+    "Sistema di raccolta GUI brand identity aggiornato"
+  ]
+}
