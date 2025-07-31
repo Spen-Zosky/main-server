@@ -56,3 +56,4 @@ tools/automation/*claude*
 tools/automation/*mcp*
 tools/automation/backups/claude_*
 package-main.json
+scripts/git-version-manager.sh
