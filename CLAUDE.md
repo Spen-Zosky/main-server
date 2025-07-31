@@ -318,6 +318,60 @@ main-server/                          # ← Can be ANY directory name, anywhere
 └── .github/workflows/                # Universal CI/CD pipelines
 ```
 
+## REPOSITORY VS LOCAL ENVIRONMENT STRATEGY
+
+### Strategic Architecture Overview
+This project operates with a **dual-environment approach** that separates development capabilities from production deployment:
+
+#### 🏠 Local Development Environment (Complete)
+- **Version**: 3.0.0-universal
+- **MCP Ecosystem**: Full integration with 12 servers and 12 agents
+- **Claude Code CLI**: Complete health monitoring and auto-recovery
+- **Features**: Enterprise methodology, universal portability, PathResolver
+- **Purpose**: Full development capabilities with AI-powered tools
+
+#### 🌐 Public Repository (Production-Ready)
+- **Repository**: https://github.com/Spen-Zosky/main-server  
+- **Version**: v1.0.0 (fresh start)
+- **Content**: Clean production code only
+- **Exclusions**: NO Claude Code CLI, NO MCP servers, NO development tools
+- **Purpose**: Secure, professional deployment foundation
+
+### Deployment Philosophy
+
+#### Security Through Separation
+- **Development Tools**: Kept strictly in local environment
+- **Production Code**: Public repository contains only essential deployment code
+- **Attack Surface**: Minimal public exposure reduces security risks
+- **Professional Presentation**: Clean repository for stakeholders and collaborators
+
+#### CI/CD Gap Analysis
+**Current State**: Manual deployment process
+- ❌ No Docker configuration in public repository
+- ❌ No GitHub Actions workflows
+- ❌ No automated testing pipeline
+- ❌ Manual multi-stage build process (3 package.json files)
+
+**Required Infrastructure**:
+- Docker multi-stage build configuration
+- GitHub Actions CI/CD pipeline
+- Automated testing and quality gates
+- PM2 deployment automation
+
+#### Bridge Strategy
+1. **Development**: Full MCP ecosystem locally for AI-powered development
+2. **Staging**: Clean build process that excludes development tools
+3. **Production**: Automated deployment from clean repository state
+4. **Sync**: Selective synchronization between environments
+
+### Implementation Roadmap
+1. **Phase 1**: Add CI/CD infrastructure to public repository
+2. **Phase 2**: Implement Docker multi-stage builds
+3. **Phase 3**: Create automated sync/bridge scripts
+4. **Phase 4**: Production deployment automation with PM2
+
+---
+
 ## DEVELOPMENT ENVIRONMENT
 
 ### Prerequisites
