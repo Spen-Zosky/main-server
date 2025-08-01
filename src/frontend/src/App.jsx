@@ -20,6 +20,9 @@ import StorybookAlternative from './pages/StorybookAlternative'
 import StorybookPro from './pages/StorybookPro'
 import BrandBuilder from './pages/BrandBuilder'
 import ErrorTestingPanelV03 from './components/errors/ErrorTestingPanelV03'
+import WebHunterPage from './pages/WebHunterPage'
+import WebHunterTest from './pages/WebHunterTest'
+import WebHunterSimple from './pages/WebHunterSimple'
 
 function App() {
   // Detect environment from URL port or server headers
@@ -43,6 +46,10 @@ function App() {
         <Route path="design-system-demo" element={<DesignSystemDemo />} />
         <Route path="design-system-test" element={<DesignSystemTestPage />} />
         <Route path="error-testing-v03" element={<ErrorTestingPanelV03 />} />
+        
+        {/* Web-Hunter Framework Interface */}
+        <Route path="web-hunter" element={<WebHunterPage />} />
+        
         {isTestEnvironment && (
           <Route path="storybook" element={<StorybookPage />} />
         )}
@@ -52,6 +59,11 @@ function App() {
       <Route path="design-system-docs" element={<StorybookAlternative />} />
       <Route path="storybook-pro" element={<StorybookPro />} />
       <Route path="brand-builder" element={<BrandBuilder />} />
+      
+      {/* Web-Hunter Standalone - No Layout Wrapper */}
+      <Route path="webhunter" element={<WebHunterPage />} />
+      <Route path="webhunter-test" element={<WebHunterTest />} />
+      <Route path="webhunter-simple" element={<WebHunterSimple />} />
     </Routes>
   )
 }

@@ -19,3 +19,6 @@ export * from './organisms';
 export { Button, Text, Input } from './atoms';
 export { SearchBox } from './molecules';
 export { Header } from './organisms';
+
+// Web-Hunter Components Export - System Integration Platform
+export * from './WebHunter';
