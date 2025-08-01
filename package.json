@@ -1,6 +1,6 @@
 {
   "name": "main-server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Enterprise Main Server Platform with MCP Ecosystem and Universal Architecture",
   "main": "app.js",
   "scripts": {
@@ -48,7 +48,15 @@
     "db:restore": "node src/scripts/db-restore.js",
     "webhunter:setup": "npm run db:init:webhunter",
     "webhunter:status": "npm run db:status",
-    "webhunter:reset": "npm run db:reset && npm run db:init:webhunter"
+    "webhunter:reset": "npm run db:reset && npm run db:init:webhunter",
+    "oci:status": "./.oci/oci_status.sh",
+    "oci:databases": "oci db autonomous-database list --compartment-id $(cat .oci/compartment_info.json | jq -r '.compartment_id') --config-file .oci/config --output table",
+    "oci:create-databases": "./.oci/create_databases.sh",
+    "oci:validate": "oci iam region list --config-file .oci/config > /dev/null && echo '✅ OCI Configuration Valid'",
+    "oci:resources": "echo 'Always Free Resource Usage:' && ./.oci/oci_status.sh | grep -A 10 'Always Free Tier Usage'",
+    "db:setup": "echo 'Oracle Database setup - Run after creating Autonomous Databases'",
+    "db:test-connections": "echo 'Testing Oracle database connections - Requires wallet files'",
+    "db:migrate": "echo 'MongoDB to Oracle migration - Requires configured databases'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -87,7 +95,10 @@
     "ai-hrms",
     "nose-research",
     "web-hunter",
-    "universal-architecture"
+    "universal-architecture", 
+    "oracle-cloud",
+    "oci-integration",
+    "autonomous-database"
   ],
   "author": "Main Server Platform Team",
   "license": "MIT"

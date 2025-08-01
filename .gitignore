@@ -50,3 +50,16 @@ package-main.json
 scripts/personal/
 CLAUDE.md
 docs/
+# Oracle Cloud Infrastructure - Security sensitive files
+.oci/
+*.pem
+*.p12
+*.jks
+*.sso
+*wallet*
+database.env
+*_populated.json
+# OCI Templates are okay to commit
+!.oci/*.template
+!.oci/*.md
+!.oci/wallet/README.md
